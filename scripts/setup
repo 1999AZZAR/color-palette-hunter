@@ -1,0 +1,40 @@
+#!/bin/bash
+# Setup script for Color Palette Hunter skill
+
+set -euo pipefail
+
+echo "Setting up Color Palette Hunter..."
+
+# Make scripts executable
+chmod +x "$(dirname "$0")/fetch-palette.sh" 2>/dev/null || true
+chmod +x "$(dirname "$0")/palette-to-design.py" 2>/dev/null || true
+
+# Check dependencies
+missing_deps=()
+
+for cmd in curl jq; do
+    if ! command -v "$cmd" &> /dev/null; then
+        missing_deps+=("$cmd")
+    fi
+done
+
+if [[ ${#missing_deps[@]} -gt 0 ]]; then
+    echo "Missing dependencies: ${missing_deps[*]}"
+    echo ""
+    echo "Install with:"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "  brew install ${missing_deps[*]}"
+    elif command -v apt-get &> /dev/null; then
+        echo "  sudo apt-get install ${missing_deps[*]}"
+    elif command -v pacman &> /dev/null; then
+        echo "  sudo pacman -S ${missing_deps[*]}"
+    fi
+    exit 1
+fi
+
+echo "✓ All dependencies installed"
+echo "✓ Setup complete!"
+echo ""
+echo "Quick start:"
+echo "  ./scripts/fetch-palette.sh --trending --limit 5"
+echo "  ./scripts/fetch-palette.sh --theme pastel --format css"

@@ -110,7 +110,7 @@ pip install requests beautifulsoup4
 
 ### 2. Make scripts executable
 ```bash
-chmod +x /home/azzar/.agents/skills/color-palette-hunter/scripts/*.sh
+chmod +x ${HOME}/.agents/skills/color-palette-hunter/scripts/*.sh
 ```
 
 ## Output Formats

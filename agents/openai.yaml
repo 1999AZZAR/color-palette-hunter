@@ -1,0 +1,4 @@
+interface:
+  display_name: "Color Palette Hunter"
+  short_description: "Fetch color palettes from Color Hunt for design work."
+  default_prompt: "Find a modern pastel color palette for my dashboard."

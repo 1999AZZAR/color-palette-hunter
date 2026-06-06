@@ -1,12 +1,12 @@
 ---
 name: color-palette-hunter
-description: Automatically fetch color palettes from Color Hunt (colorhunt.co) based on design requirements. Extract trending, popular, or search-based palettes and export them for design applications.
+description: Automatically fetch color palettes from Color Hunt (colorhunt.co) and Coolors (coolors.co) based on design requirements. Extract trending, popular, or search-based palettes and export them for design applications.
 ---
 
 # Color Palette Hunter Skill
 
 ## Overview
-This skill provides an automated interface to discover and extract color palettes from Color Hunt (colorhunt.co). Perfect for design work, it fetches palettes based on themes, trends, or custom queries and exports them in multiple formats for immediate use in design tools.
+This skill provides an automated interface to discover and extract color palettes from Color Hunt (colorhunt.co) and Coolors (coolors.co). Perfect for design work, it fetches palettes based on themes, trends, or custom queries and exports them in multiple formats for immediate use in design tools.
 
 ## Usage
 - **Role**: Design Color Curator
@@ -29,6 +29,7 @@ Fetches color palettes from Color Hunt with multiple filtering options.
 ```
 
 **Options:**
+- `-s, --source <SOURCE>`: Palette source: `colorhunt` or `coolors` (default: colorhunt)
 - `-t, --theme <THEME>`: Search by theme (e.g., "modern", "pastel", "vibrant", "dark")
 - `-q, --query <QUERY>`: Free-form search query
 - `-l, --limit <NUM>`: Number of palettes to fetch (default: 5)
@@ -37,6 +38,7 @@ Fetches color palettes from Color Hunt with multiple filtering options.
 - `--trending`: Fetch only trending palettes
 - `--popular`: Fetch only popular palettes
 - `--random`: Get random palettes
+- `--coolors-url <URL>`: Fetch a specific Coolors palette by URL
 
 **Examples:**
 
@@ -50,17 +52,29 @@ Fetches color palettes from Color Hunt with multiple filtering options.
    scripts/fetch-palette.sh --theme pastel --limit 10
    ```
 
-3. **Get palettes with custom query:**
+3. **Fetch from Coolors (URL only):**
+   Coolors has no public API — palettes are loaded via JavaScript. Only direct URL fetching works:
+   ```bash
+   scripts/fetch-palette.sh --coolors-url "https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51"
+   ```
+   Browse palettes at https://coolors.co/palettes and copy a URL.
+
+4. **Fetch a specific Coolors palette by URL:**
+   ```bash
+   scripts/fetch-palette.sh --coolors-url "https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51"
+   ```
+
+5. **Get palettes with custom query:**
    ```bash
    scripts/fetch-palette.sh --query "modern minimalist" --format tailwind
    ```
 
-4. **Export to CSS variables:**
+6. **Export to CSS variables:**
    ```bash
    scripts/fetch-palette.sh --trending --format css --output palette.css
    ```
 
-5. **Get random palettes for inspiration:**
+7. **Get random palettes for inspiration:**
    ```bash
    scripts/fetch-palette.sh --random --limit 3 --format html
    ```
@@ -132,11 +146,13 @@ chmod +x ${HOME}/.agents/skills/color-palette-hunter/scripts/*.sh
 
 ### CSS
 ```css
-:root {
-  --color-1: #FF6B6B;
-  --color-2: #4ECDC4;
-  --color-3: #45B7D1;
-  --color-4: #F7DC6F;
+/* Color Palettes */
+
+.palette-modern-minimalist {
+  --color1: #FF6B6B;
+  --color2: #4ECDC4;
+  --color3: #45B7D1;
+  --color4: #F7DC6F;
 }
 ```
 
@@ -159,9 +175,9 @@ module.exports = {
 ```
 
 ## Security & Rate Limiting
-- Color Hunt allows public API requests for research/educational use
+- Color Hunt allows public API access for research/educational use
+- Coolors has no public API — only direct URL parsing is supported (no browsing/search)
 - Respects robots.txt and rate limits automatically
-- No authentication required for public palettes
 - Caches results locally to minimize repeated requests
 
 ## Troubleshooting

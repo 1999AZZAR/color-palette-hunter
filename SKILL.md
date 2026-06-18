@@ -10,7 +10,7 @@ This skill provides an automated interface to discover and extract color palette
 
 ## MCP Integration
 
-When the `ui-designer` MCP server is installed alongside this skill, both systems coexist:
+When the `the-designer` MCP server is installed alongside this skill, both systems coexist:
 
 | Capability | MCP Tool | Skill Script |
 |------------|----------|--------------|

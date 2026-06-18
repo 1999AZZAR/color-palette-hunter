@@ -8,6 +8,20 @@ description: Automatically fetch color palettes from Color Hunt (colorhunt.co) b
 ## Overview
 This skill provides an automated interface to discover and extract color palettes from Color Hunt (colorhunt.co). Perfect for design work, it fetches palettes based on themes, trends, or custom queries and exports them in multiple formats for immediate use in design tools.
 
+## MCP Integration
+
+When the `ui-designer` MCP server is installed alongside this skill, both systems coexist:
+
+| Capability | MCP Tool | Skill Script |
+|------------|----------|--------------|
+| Fetch palettes | `palette_fetch` (native TS API) | `scripts/fetch-palette.sh` (CLI) |
+| Convert formats | `palette_convert` (TS) | `scripts/palette-to-design.py` (CLI) |
+| Palette variants | `generate_palette_variants` (TS) | — |
+
+**Fallback behavior**: If the MCP's API fetch fails, it automatically falls back to `scripts/fetch-palette.sh`.
+
+**Standalone usage**: The skill scripts work independently without the MCP installed. Use the CLI commands below for direct terminal access.
+
 ## Usage
 - **Role**: Design Color Curator
 - **Trigger**: "Find color palettes for [theme]", "Get trending palettes", "Search palettes for modern design"
